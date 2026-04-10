@@ -4,140 +4,692 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>X/Twitter Impressions Report</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+:root {
+    --bg-primary: #000000;
+    --bg-card: #0a0a0a;
+    --bg-card-hover: #111111;
+    --bg-table-header: #0c1200;
+    --bg-table-row: #080808;
+    --bg-table-row-alt: #0d0d0d;
+    --accent-green: #5dfd9b;
+    --accent-green-dim: rgba(93, 253, 155, 0.15);
+    --accent-green-glow: rgba(93, 253, 155, 0.08);
+    --accent-cyan: #00e5ff;
+    --accent-cyan-dim: rgba(0, 229, 255, 0.14);
+    --accent-pink: #e91e63;
+    --accent-pink-dim: rgba(233, 30, 99, 0.15);
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --text-tertiary: #666666;
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --border-accent: rgba(93, 253, 155, 0.2);
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --shadow: 0 22px 60px rgba(0, 0, 0, 0.34);
+    --text: var(--text-primary);
+    --muted: var(--text-secondary);
+    --muted-strong: var(--text-tertiary);
+    --mint: var(--accent-green);
+    --pink: var(--accent-pink);
+}
+
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #0a0a0f;
-    color: #e0e0e6;
+    font-family: var(--font-main);
+    background: var(--bg-primary);
+    color: var(--text);
     min-height: 100vh;
-    padding: 2rem;
+    padding: 0 2rem 3rem;
+    position: relative;
+    overflow-x: hidden;
+    line-height: 1.7;
+}
+
+body::before {
+    display: none;
+}
+
+body::after {
+    display: none;
 }
 
 .header {
-    text-align: center;
-    margin-bottom: 3rem;
-    padding: 2rem;
-    background: linear-gradient(135deg, rgba(99,102,241,0.1) 0%, rgba(168,85,247,0.1) 50%, rgba(236,72,153,0.1) 100%);
-    border-radius: 20px;
-    border: 1px solid rgba(99,102,241,0.15);
-    backdrop-filter: blur(20px);
+    position: relative;
+    max-width: 1380px;
+    margin: 0 auto 4rem;
+    padding-top: 5.5rem;
+    overflow: visible;
 }
 
-.header h1 {
-    font-size: 2.2rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #818cf8 0%, #a78bfa 40%, #f472b6 100%);
+.header::before {
+    display: none;
+}
+
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border-subtle);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.brand {
+    color: var(--mint);
+    line-height: 0;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.brand svg {
+    display: block;
+    height: 26px;
+    width: auto;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 0.4rem 0.85rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.create-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 165px;
+    padding: 0.95rem 1.4rem;
+    border-radius: 18px;
+    background: var(--mint);
+    color: var(--bg-primary);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.hero-shell {
+    position: relative;
+    min-height: calc(100vh - 5.5rem);
+    padding: 3.5rem 0 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.hero-shell::before {
+    content: '';
+    position: absolute;
+    top: -42%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 820px;
+    height: 820px;
+    background: radial-gradient(circle, var(--accent-green-glow) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.hero-eyebrow {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--mint);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0.5rem 1.2rem;
+    border: 1px solid var(--border-accent);
+    border-radius: 50px;
+    margin-bottom: 1.8rem;
+    background: var(--accent-green-dim);
+}
+
+.hero-eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--mint);
+}
+
+.hero-heading {
+    position: relative;
+    z-index: 1;
+    max-width: 980px;
+    font-size: clamp(2.8rem, 6vw, 5.4rem);
+    font-weight: 900;
+    line-height: 1.03;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.25rem;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--accent-green) 0%, #00e5ff 50%, var(--accent-pink) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 0.5rem;
 }
 
-.header p {
-    color: #9ca3af;
-    font-size: 0.95rem;
+.hero-subtitle {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(1rem, 1.3vw, 1.2rem);
+    color: var(--text-secondary);
+    max-width: 720px;
+    margin: 0 auto 2.6rem;
+    line-height: 1.8;
 }
 
-.stats-bar {
+.hero-cta {
+    position: relative;
+    z-index: 1;
     display: flex;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
 }
 
+.btn-primary,
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--accent-green);
+    color: var(--bg-primary);
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 0 20px var(--accent-green-dim);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px rgba(93, 253, 155, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid var(--border-subtle);
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent-green);
+    background: var(--accent-green-dim);
+    color: var(--accent-green);
+}
+
+.hero-grid {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+}
+
+.hero-card {
+    min-height: 360px;
+    padding: 2rem;
+    border-radius: var(--radius-xl);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.hero-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-green-dim), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.hero-card:hover {
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+}
+
+.hero-card:hover::before {
+    opacity: 1;
+}
+
+.hero-card.artist {
+    border-color: rgba(233, 30, 99, 0.4);
+}
+
+.hero-card.artist::before {
+    background: linear-gradient(90deg, transparent, var(--accent-pink-dim), transparent);
+}
+
+.hero-card.worker {
+    border-color: rgba(93, 253, 155, 0.2);
+}
+
+.hero-card.developer {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.hero-card.developer::before {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+}
+
+.hero-card-top {
+    display: grid;
+    gap: 0.9rem;
+    max-width: 32ch;
+}
+
+.hero-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.hero-card.artist .hero-kicker {
+    color: var(--pink);
+}
+
+.hero-card.worker .hero-kicker {
+    color: var(--mint);
+}
+
+.hero-card.developer .hero-kicker {
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.hero-card h1,
+.hero-card h2 {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: transparent;
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.hero-title {
+    font-size: clamp(1.8rem, 2.3vw, 2.8rem);
+    line-height: 1.12;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.hero-copy {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.hero-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    min-width: 124px;
+    padding: 0.85rem 1.25rem;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.hero-action:hover {
+    transform: translateY(-1px);
+}
+
+.hero-card.artist .hero-action {
+    background: var(--pink);
+    color: white;
+}
+
+.hero-card.worker .hero-action {
+    background: var(--mint);
+    color: #07110a;
+}
+
+.hero-card.developer .hero-action {
+    background: #ffffff;
+    color: #0b0b0d;
+    border: 0;
+}
+
+.section-intro {
+    max-width: 1380px;
+    margin: 0 auto 1.5rem;
+}
+
+.section-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-green);
+    margin-bottom: 0.85rem;
+}
+
+.section-title {
+    font-size: clamp(1.8rem, 2.5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.7rem;
+}
+
+.section-desc {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    max-width: 760px;
+    line-height: 1.8;
+}
+
+.stats-bar {
+    max-width: 1380px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: 1.45fr repeat(2, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    align-items: stretch;
+}
+
 .stat-card {
-    background: linear-gradient(145deg, rgba(30,30,45,0.8), rgba(15,15,25,0.9));
-    border: 1px solid rgba(99,102,241,0.15);
-    border-radius: 16px;
-    padding: 1.2rem 2rem;
-    text-align: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    text-align: left;
     min-width: 160px;
-    transition: transform 0.2s, border-color 0.2s;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-green-dim), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
 .stat-card:hover {
     transform: translateY(-2px);
-    border-color: rgba(99,102,241,0.4);
+    border-color: var(--border-accent);
+    background: var(--bg-card-hover);
+}
+
+.stat-card:hover::before {
+    opacity: 1;
 }
 
 .stat-card .stat-value {
     font-size: 1.8rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #818cf8, #f472b6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--accent-green);
+    font-family: var(--font-mono);
+    line-height: 1.2;
 }
 
 .stat-card .stat-label {
-    font-size: 0.8rem;
-    color: #6b7280;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-top: 0.3rem;
+    letter-spacing: 0.08em;
+    margin-top: 0.45rem;
+}
+
+.stats-stack {
+    display: grid;
+    gap: 1rem;
+    text-align: left;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(93, 253, 155, 0.05) 0%, rgba(0, 229, 255, 0.03) 50%, rgba(233, 30, 99, 0.03) 100%);
+    border-color: var(--border-accent);
+}
+
+.stats-bar .stat-card:nth-child(1) {
+    border-color: var(--border-accent);
+}
+
+.stats-bar .stat-card:nth-child(1) .stat-value,
+.stats-bar .stat-card:nth-child(1) .stats-stack-title {
+    color: var(--accent-green);
+}
+
+.stats-bar .stat-card:nth-child(2) {
+    border-color: rgba(0, 229, 255, 0.2);
+}
+
+.stats-bar .stat-card:nth-child(2)::before {
+    background: linear-gradient(90deg, transparent, var(--accent-cyan-dim), transparent);
+}
+
+.stats-bar .stat-card:nth-child(2):hover {
+    border-color: rgba(0, 229, 255, 0.35);
+}
+
+.stats-bar .stat-card:nth-child(2) .stat-value {
+    color: var(--accent-cyan);
+}
+
+.stats-bar .stat-card:nth-child(3) {
+    border-color: rgba(233, 30, 99, 0.2);
+}
+
+.stats-bar .stat-card:nth-child(3)::before {
+    background: linear-gradient(90deg, transparent, var(--accent-pink-dim), transparent);
+}
+
+.stats-bar .stat-card:nth-child(3):hover {
+    border-color: rgba(233, 30, 99, 0.35);
+}
+
+.stats-bar .stat-card:nth-child(3) .stat-value {
+    color: var(--accent-pink);
+}
+
+.stats-stack::before {
+    opacity: 1;
+}
+
+.stats-stack-title {
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mint);
+}
+
+.stacked-stat {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid var(--border-subtle);
+    border-radius: 0;
+    background: transparent;
+}
+
+.stacked-stat:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.stacked-stat .stat-label {
+    margin-top: 0;
+}
+
+.stats-stack .stat-value,
+.profile-stat-value,
+.tweet-views,
+.views-badge {
+    font-variant-numeric: tabular-nums;
+}
+
+.stats-stack .stat-value {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 0;
+    padding: 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    text-shadow: none;
 }
 
 /* Controls */
 .controls {
+    max-width: 1380px;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     gap: 1rem;
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
     align-items: center;
+    padding: 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
 }
 
 .search-box {
     flex: 1;
     min-width: 200px;
-    padding: 0.7rem 1.2rem;
-    background: rgba(30,30,45,0.8);
-    border: 1px solid rgba(99,102,241,0.2);
-    border-radius: 12px;
-    color: #e0e0e6;
+    padding: 0.9rem 1.15rem;
+    background: var(--bg-table-row-alt);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text);
     font-family: inherit;
     font-size: 0.9rem;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.search-box::placeholder {
+    color: var(--muted);
 }
 
 .search-box:focus {
-    border-color: rgba(99,102,241,0.5);
+    border-color: var(--border-accent);
+    background: #101010;
 }
 
 .sort-btn {
-    padding: 0.7rem 1.5rem;
-    background: rgba(99,102,241,0.15);
-    border: 1px solid rgba(99,102,241,0.25);
-    border-radius: 12px;
-    color: #818cf8;
-    font-family: inherit;
-    font-size: 0.85rem;
-    font-weight: 500;
+    padding: 0.85rem 1.2rem;
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
 }
 
 .sort-btn:hover, .sort-btn.active {
-    background: rgba(99,102,241,0.3);
-    border-color: rgba(99,102,241,0.5);
+    background: var(--accent-green-dim);
+    border-color: var(--border-accent);
+    color: var(--mint);
 }
 
 /* Profile sections */
+.profiles-wrap {
+    max-width: 1380px;
+    margin: 0 auto;
+}
+
 .profile-section {
-    background: linear-gradient(145deg, rgba(20,20,35,0.9), rgba(10,10,20,0.95));
-    border: 1px solid rgba(99,102,241,0.1);
-    border-radius: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
     margin-bottom: 1.5rem;
     overflow: hidden;
-    transition: border-color 0.3s;
+    transition: all 0.3s ease;
 }
 
 .profile-section:hover {
-    border-color: rgba(99,102,241,0.25);
+    border-color: var(--border-accent);
+    background: var(--bg-card-hover);
 }
 
 .profile-header {
@@ -147,14 +699,14 @@ body {
     padding: 1.2rem 1.5rem;
     cursor: pointer;
     user-select: none;
-    background: linear-gradient(135deg, rgba(99,102,241,0.05) 0%, rgba(168,85,247,0.05) 100%);
-    border-bottom: 1px solid rgba(99,102,241,0.08);
+    background: transparent;
+    border-bottom: 1px solid transparent;
     flex-wrap: wrap;
     gap: 0.8rem;
 }
 
 .profile-header:hover {
-    background: linear-gradient(135deg, rgba(99,102,241,0.1) 0%, rgba(168,85,247,0.1) 100%);
+    background: rgba(255, 255, 255, 0.015);
 }
 
 .profile-info {
@@ -166,14 +718,15 @@ body {
 .profile-rank {
     font-size: 1.6rem;
     font-weight: 800;
-    color: rgba(99,102,241,0.3);
+    color: var(--accent-green);
     min-width: 40px;
+    font-family: var(--font-mono);
 }
 
 .profile-name {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #e0e0e6;
+    color: var(--text);
 }
 
 .profile-name a {
@@ -183,39 +736,54 @@ body {
 }
 
 .profile-name a:hover {
-    color: #818cf8;
+    color: var(--mint);
 }
 
 .profile-handle {
     font-size: 0.85rem;
-    color: #6b7280;
+    color: var(--muted-strong);
 }
 
 .profile-stats {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+    min-width: 220px;
+    margin-left: auto;
 }
 
 .profile-stat {
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    background: var(--bg-table-row-alt);
 }
 
 .profile-stat-value {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #818cf8;
+    color: var(--mint);
+    font-family: var(--font-mono);
+    padding: 0.22rem 0.65rem;
+    border-radius: 6px;
+    border: 0;
+    background: var(--accent-green-dim);
 }
 
 .profile-stat-label {
-    font-size: 0.7rem;
-    color: #6b7280;
+    font-size: 0.72rem;
+    color: var(--muted);
     text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.12em;
 }
 
 .toggle-icon {
-    color: #6b7280;
+    color: var(--muted-strong);
     transition: transform 0.3s;
     font-size: 1.2rem;
 }
@@ -238,7 +806,7 @@ body {
     align-items: center;
     gap: 1rem;
     padding: 0.9rem 1.5rem;
-    border-bottom: 1px solid rgba(99,102,241,0.05);
+    border-bottom: 1px solid var(--border-subtle);
     transition: background 0.2s;
     flex-wrap: wrap;
 }
@@ -248,12 +816,12 @@ body {
 }
 
 .tweet-row:hover {
-    background: rgba(99,102,241,0.04);
+    background: var(--bg-card-hover);
 }
 
 .tweet-num {
     font-size: 0.8rem;
-    color: #4b5563;
+    color: var(--muted-strong);
     min-width: 24px;
     font-weight: 500;
 }
@@ -263,16 +831,20 @@ body {
     font-weight: 700;
     min-width: 80px;
     text-align: right;
+    padding: 0.32rem 0.55rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-table-row-alt);
 }
 
-.tweet-views.high { color: #34d399; }
-.tweet-views.medium { color: #fbbf24; }
-.tweet-views.low { color: #6b7280; }
+.tweet-views.high { color: var(--mint); }
+.tweet-views.medium { color: #f0f0f2; }
+.tweet-views.low { color: var(--muted); }
 
 .tweet-text {
     flex: 1;
     font-size: 0.85rem;
-    color: #9ca3af;
+    color: var(--text-secondary);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -281,14 +853,14 @@ body {
 
 .tweet-link {
     font-size: 0.8rem;
-    color: #818cf8;
+    color: var(--mint);
     text-decoration: none;
     transition: color 0.2s;
     white-space: nowrap;
 }
 
 .tweet-link:hover {
-    color: #a78bfa;
+    color: var(--text-primary);
     text-decoration: underline;
 }
 
@@ -296,7 +868,7 @@ body {
     display: flex;
     gap: 0.8rem;
     font-size: 0.75rem;
-    color: #4b5563;
+    color: var(--muted-strong);
 }
 
 .tweet-meta span {
@@ -307,44 +879,48 @@ body {
 
 /* Top tweets table */
 .top-tweets-section {
+    max-width: 1380px;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: 2rem;
-}
-
-.top-tweets-section h2 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: #e0e0e6;
 }
 
 .top-table {
     width: 100%;
     border-collapse: collapse;
-    background: linear-gradient(145deg, rgba(20,20,35,0.9), rgba(10,10,20,0.95));
-    border-radius: 16px;
+    background: transparent;
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    border: 1px solid rgba(99,102,241,0.1);
+    border: 1px solid var(--border-subtle);
 }
 
 .top-table thead th {
-    padding: 0.9rem 1rem;
+    padding: 1rem 1.2rem;
     text-align: left;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #6b7280;
-    background: rgba(99,102,241,0.05);
-    border-bottom: 1px solid rgba(99,102,241,0.1);
+    letter-spacing: 0.12em;
+    color: var(--accent-green);
+    background: var(--bg-table-header);
+    font-family: var(--font-mono);
+    border-bottom: 1px solid var(--border-accent);
+    white-space: nowrap;
 }
 
 .top-table tbody td {
-    padding: 0.75rem 1rem;
-    font-size: 0.85rem;
-    border-bottom: 1px solid rgba(99,102,241,0.05);
+    padding: 1rem 1.2rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: top;
+}
+
+.top-table tbody tr:nth-child(even) {
+    background: var(--bg-table-row-alt);
 }
 
 .top-table tbody tr:hover {
-    background: rgba(99,102,241,0.05);
+    background: var(--accent-green-dim);
 }
 
 .top-table tbody tr:last-child td {
@@ -352,7 +928,7 @@ body {
 }
 
 .top-table a {
-    color: #818cf8;
+    color: var(--mint);
     text-decoration: none;
 }
 
@@ -362,58 +938,147 @@ body {
 
 .views-badge {
     display: inline-block;
-    padding: 0.2rem 0.6rem;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 0.85rem;
+    padding: 0.24rem 0.6rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 0;
 }
 
-.views-badge.high { background: rgba(52,211,153,0.15); color: #34d399; }
-.views-badge.medium { background: rgba(251,191,36,0.15); color: #fbbf24; }
-.views-badge.low { background: rgba(107,114,128,0.15); color: #6b7280; }
+.views-badge.high { background: rgba(110,241,165,0.14); color: var(--mint); }
+.views-badge.medium { background: rgba(255,255,255,0.05); color: #f0f0f2; }
+.views-badge.low { background: rgba(147,161,141,0.12); color: var(--muted); }
+
+td[style*="color:#9ca3af"] {
+    color: var(--text-secondary) !important;
+}
 
 .errors-section {
+    max-width: 1380px;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 2rem;
     padding: 1.5rem;
-    background: rgba(239,68,68,0.05);
-    border: 1px solid rgba(239,68,68,0.15);
-    border-radius: 16px;
+    background: rgba(233, 30, 99, 0.08);
+    border: 1px solid rgba(233, 30, 99, 0.22);
+    border-radius: var(--radius-lg);
 }
 
 .errors-section h3 {
-    color: #ef4444;
+    color: #ff8c8c;
     font-size: 1rem;
     margin-bottom: 0.8rem;
 }
 
 .error-item {
     font-size: 0.8rem;
-    color: #9ca3af;
+    color: #d6dfd1;
     margin-bottom: 0.3rem;
 }
 
 @media (max-width: 768px) {
-    body { padding: 1rem; }
-    .header h1 { font-size: 1.5rem; }
-    .stats-bar { gap: 0.8rem; }
-    .stat-card { min-width: 120px; padding: 0.8rem 1rem; }
+    body { padding: 0 1rem 2rem; }
+    .top-nav { flex-wrap: wrap; padding: 0.9rem 1rem; }
+    .nav-links { order: 3; width: 100%; flex-wrap: wrap; justify-content: flex-start; }
+    .create-btn { width: 100%; }
+    .header { padding-top: 7rem; margin-bottom: 3rem; }
+    .hero-shell { min-height: auto; padding: 2rem 0 1rem; }
+    .hero-heading { font-size: 2.5rem; }
+    .hero-subtitle { margin-bottom: 1.8rem; }
+    .hero-cta { width: 100%; }
+    .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-card { min-height: auto; padding: 1.5rem; border-radius: var(--radius-lg); }
+    .hero-title { font-size: 2rem; }
+    .hero-action { min-width: 100%; }
+    .stats-bar { grid-template-columns: 1fr; gap: 0.8rem; }
+    .stat-card { min-width: 120px; padding: 1.35rem; border-radius: var(--radius-lg); }
     .stat-card .stat-value { font-size: 1.3rem; }
+    .stacked-stat { align-items: flex-start; flex-direction: column; gap: 0.35rem; }
+    .controls { padding: 0.85rem; }
     .profile-header { padding: 0.8rem 1rem; }
+    .profile-stats { min-width: 100%; }
     .tweet-row { padding: 0.6rem 1rem; }
+    .top-table thead th,
+    .top-table tbody td { padding: 0.8rem 0.9rem; }
 }
 </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>📊 X/Twitter Impressions Report</h1>
-    <p>Pobrano 267 tweetów z 28 profili • Data: kwiecień 2026</p>
+    <div class="top-nav">
+        <a class="brand" href="https://www.sogni.ai/" target="_blank" rel="noopener noreferrer" aria-label="Sogni">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 387 160" aria-hidden="true">
+                <path fill="currentColor" d="M17.2,106.99c5.33,2.29,11.3,3.41,17.95,3.41,7.03,0,13.11-1.33,18.23-3.98,5.23-2.75,9.17-6.34,11.82-10.81,2.76-4.44,4.12-9.19,4.12-14.2,0-6.24-1.47-11.22-4.43-14.92-2.86-3.8-6.36-6.57-10.53-8.37-4.09-1.8-9.4-3.59-15.96-5.39-4.94-1.34-8.83-2.57-11.69-3.7-2.86-1.13-5.23-2.64-7.13-4.54-1.8-1.98-2.7-4.49-2.7-7.52,0-4.44,1.47-7.86,4.4-10.22,2.94-2.36,6.75-3.54,11.41-3.54,5.12,0,9.27,1.28,12.39,3.83,3.14,2.57,4.84,5.62,5.12,9.24h17.95c-.67-8.34-4.09-14.87-10.25-19.62-6.08-4.83-13.9-7.24-23.51-7.24-6.75,0-12.67,1.13-17.82,3.41-5.12,2.29-9.11,5.55-11.97,9.81C1.73,26.91.31,31.89.31,37.56c0,6.16,1.42,11.09,4.27,14.76,2.86,3.7,6.28,6.44,10.25,8.24,4.09,1.69,9.35,3.42,15.81,5.11,5.12,1.34,9.11,2.57,11.97,3.7,2.94,1.13,5.36,2.75,7.26,4.83,1.98,2.08,2.99,4.78,2.99,8.09,0,4.26-1.57,7.75-4.71,10.5-3.14,2.64-7.49,3.98-13.11,3.98s-9.63-1.36-12.67-4.11c-2.94-2.75-4.61-6.24-5-10.5H0c0,5.67,1.52,10.66,4.56,14.92,3.04,4.26,7.21,7.57,12.54,9.94l.1-.03ZM102.48,105.71c5.97,3.31,12.67,4.98,20.08,4.98s14.34-1.67,20.52-4.98c6.28-3.42,11.2-8.19,14.83-14.35,3.6-6.16,5.41-13.22,5.41-21.16s-1.75-15.02-5.28-21.16c-3.53-6.14-8.32-10.89-14.39-14.2-6.08-3.31-12.87-4.98-20.37-4.98s-14.29,1.67-20.37,4.98c-6.08,3.31-10.87,8.06-14.39,14.2-3.53,6.16-5.28,13.22-5.28,21.16s1.7,15.15,5.12,21.31c3.42,6.06,8.11,10.81,14.11,14.2ZM134.25,93.64c-3.61,1.98-7.49,2.98-11.69,2.98-6.54,0-12.03-2.29-16.38-6.83-4.27-4.65-6.41-11.17-6.41-19.62,0-5.67,1.06-10.48,3.14-14.35,2.08-3.98,4.89-6.96,8.39-8.96,3.61-1.98,7.49-2.98,11.69-2.98s8.08,1,11.69,2.98c3.6,1.98,6.51,4.98,8.7,8.96,2.19,3.88,3.27,8.68,3.27,14.35s-1.13,10.5-3.42,14.48c-2.29,3.98-5.28,6.96-8.99,8.96v.03ZM227.1,33.53c-4.66-2.46-10.02-3.7-16.09-3.7-6.85,0-13.11,1.69-18.8,5.11-5.61,3.31-10.07,8.01-13.39,14.07-3.22,6.06-4.84,13.02-4.84,20.88s1.62,14.92,4.84,21.16c3.32,6.16,7.78,10.99,13.39,14.48,5.69,3.42,11.97,5.11,18.8,5.11,5.97,0,11.3-1.23,15.96-3.7,4.74-2.57,8.5-5.67,11.25-9.37v13.07c0,7.57-2.03,13.35-6.13,17.33-3.99,3.98-9.27,5.96-15.81,5.96-5.61,0-10.45-1.28-14.52-3.83-3.99-2.46-6.59-5.72-7.83-9.81h-16.09c.95,8.53,4.94,15.25,11.97,20.18,7.03,5.03,15.86,7.52,26.5,7.52,7.98,0,14.81-1.62,20.52-4.83,5.79-3.21,10.22-7.68,13.26-13.35,3.04-5.6,4.56-11.99,4.56-19.18V31.07h-16.38v11.37c-2.65-3.59-6.36-6.57-11.12-8.96l-.05.05ZM234.8,56.13c2.29,3.98,3.42,8.68,3.42,14.07s-1.13,10.14-3.42,14.2c-2.19,3.98-5.07,7.01-8.7,9.09-3.61,2.08-7.49,3.13-11.69,3.13s-7.98-1.05-11.69-3.13c-3.6-2.18-6.57-5.32-8.83-9.37-2.19-4.08-3.27-8.81-3.27-14.2s1.08-10.04,3.27-13.92c2.29-3.98,5.23-6.96,8.83-8.96,3.6-2.08,7.49-3.13,11.69-3.13s8.08,1.05,11.69,3.13c3.6,2.08,6.51,5.11,8.7,9.09ZM332.08,33.69c-4.84-2.57-10.35-3.83-16.53-3.83-4.66,0-9.06.9-13.26,2.7-4.09,1.8-7.47,4.31-10.12,7.52v-8.96h-16.25v78.29h16.25v-43.75c0-7.01,1.75-12.35,5.28-16.05,3.61-3.8,8.45-5.67,14.52-5.67s10.87,1.9,14.39,5.67c3.5,3.7,5.28,9.04,5.28,16.05v43.75h16.09v-46.17c0-7.11-1.37-13.17-4.12-18.18-2.76-5.03-6.59-8.81-11.54-11.37ZM369.34,17.77c1.98,1.98,4.45,2.98,7.42,2.98s5.28-1,7.26-2.98c1.98-1.98,2.99-4.44,2.99-7.39s-1-5.39-2.99-7.39c-1.98-1.98-4.43-2.98-7.26-2.98s-5.41,1-7.42,2.98c-1.98,1.98-2.99,4.44-2.99,7.39s1,5.39,2.99,7.39ZM384.71,109.41V31.12h-16.25v78.29h16.25Z"/>
+            </svg>
+        </a>
+        <div class="nav-links">
+            <a class="nav-link" href="#overview">Overview</a>
+            <a class="nav-link" href="#topTweets">Top Tweets</a>
+            <a class="nav-link" href="#profiles">Profiles</a>
+        </div>
+        <a class="create-btn" href="https://creator.sogni.ai/" target="_blank" rel="noopener noreferrer">Creator Program</a>
+    </div>
+    <div class="hero-shell">
+        <div class="hero-eyebrow"><span class="dot"></span>Sogni Creator Style</div>
+        <h1 class="hero-heading">Track <span class="gradient-text">Impressions</span> with a cleaner Sogni-style dashboard.</h1>
+        <div class="hero-cta">
+            <a class="btn-primary" href="#overview">View Overview</a>
+            <a class="btn-secondary" href="#profiles">Jump to Profiles</a>
+        </div>
+        <div class="hero-grid">
+            <section class="hero-card artist">
+                <div class="hero-card-top">
+                    <div class="hero-kicker">01 | Overview</div>
+                    <h1>X/Twitter Impressions Report</h1>
+                    <div class="hero-title">See total, average and peak views in one place.</div>
+                </div>
+                <a class="hero-action" href="#overview">Open Overview</a>
+            </section>
+            <section class="hero-card worker">
+                <div class="hero-card-top">
+                    <div class="hero-kicker">02 | Top Tweets</div>
+                    <h2>Views Overview</h2>
+                    <div class="hero-title">Surface the strongest posts with clearer table styling.</div>
+                </div>
+                <a class="hero-action" href="#topTweets">Open Top Tweets</a>
+            </section>
+            <section class="hero-card developer">
+                <div class="hero-card-top">
+                    <div class="hero-kicker">03 | Profiles</div>
+                    <h2>Profiles</h2>
+                    <div class="hero-title">Compare creators, sort results and inspect tweet-level detail.</div>
+                </div>
+                <a class="hero-action" href="#profiles">Open Profiles</a>
+            </section>
+        </div>
+    </div>
 </div>
 
-<div class="stats-bar">
-    <div class="stat-card">
-        <div class="stat-value">111,697</div>
-        <div class="stat-label">Total Views</div>
+<div class="section-intro">
+    <div class="section-label">01 | Overview</div>
+    <h2 class="section-title">Performance Snapshot</h2>
+</div>
+
+<div class="stats-bar" id="overview">
+    <div class="stat-card stats-stack">
+        <div class="stats-stack-title">Views Overview</div>
+        <div class="stacked-stat">
+            <div class="stat-label">Total Views</div>
+            <div class="stat-value">111,697</div>
+        </div>
+        <div class="stacked-stat">
+            <div class="stat-label">Avg Views/Tweet</div>
+            <div class="stat-value">418</div>
+        </div>
+        <div class="stacked-stat">
+            <div class="stat-label">Max Views</div>
+            <div class="stat-value">12,899</div>
+        </div>
     </div>
     <div class="stat-card">
         <div class="stat-value">267</div>
@@ -423,18 +1088,15 @@ body {
         <div class="stat-value">28</div>
         <div class="stat-label">Profiles</div>
     </div>
-    <div class="stat-card">
-        <div class="stat-value">418</div>
-        <div class="stat-label">Avg Views/Tweet</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-value">12,899</div>
-        <div class="stat-label">Max Views</div>
-    </div>
 </div>
 
-<div class="top-tweets-section">
-    <h2>🔥 Top 30 Tweets by Views</h2>
+<div class="section-intro">
+    <div class="section-label">02 | Top Tweets</div>
+    <h2 class="section-title">Top 30 Tweets by Views</h2>
+    <p class="section-desc">The strongest tweets are collected in one table with a cleaner hierarchy, hover states, and badges styled to match the Sogni visual system.</p>
+</div>
+
+<div class="top-tweets-section" id="topTweets">
     <table class="top-table">
         <thead>
             <tr>
@@ -783,8 +1445,15 @@ realization, reference from anime image 🧐
     </table>
 </div>
 
+<div class="section-intro" id="profiles">
+    <div class="section-label">03 | Profiles</div>
+    <h2 class="section-title">Profile Leaderboard</h2>
+    <p class="section-desc">Sort profiles by total views, average views, peak views, or tweet count, then expand each section to inspect post-level details.</p>
+</div>
+
+<div class="profiles-wrap">
 <div class="controls">
-    <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search profiles..." oninput="filterProfiles()">
+    <input type="text" class="search-box" id="searchBox" placeholder="Search profiles..." oninput="filterProfiles()">
     <button class="sort-btn active" onclick="sortBy('total')" id="btnTotal">Total Views</button>
     <button class="sort-btn" onclick="sortBy('avg')" id="btnAvg">Avg Views</button>
     <button class="sort-btn" onclick="sortBy('max')" id="btnMax">Max Views</button>
@@ -962,7 +1631,8 @@ Built from billions o</span>
             <a href="https://x.com/labuanjo/status/2035897853651177475" target="_blank" class="tweet-link">Open ↗</a>
         </div>
 
-    </div>
+</div>
+</div>
 </div>
 
 <div class="profile-section" data-author="MERCY_kuni" data-total="8385" data-avg="838.5" data-max="2943" data-count="10">
