@@ -700,6 +700,24 @@ body::after {
     background: var(--bg-card-hover);
 }
 
+#profilesContainer .profile-section:nth-child(-n+3) {
+    border-color: rgba(233, 30, 99, 0.24);
+    box-shadow: inset 0 1px 0 rgba(233, 30, 99, 0.14);
+}
+
+#profilesContainer .profile-section:nth-child(-n+3):hover {
+    border-color: rgba(233, 30, 99, 0.38);
+}
+
+#profilesContainer .profile-section:nth-child(-n+3) .profile-rank {
+    color: var(--accent-pink);
+}
+
+#profilesContainer .profile-section:nth-child(-n+3) .profile-stat-value {
+    color: var(--accent-pink);
+    background: var(--accent-pink-dim);
+}
+
 .profile-header {
     display: flex;
     justify-content: space-between;
@@ -930,8 +948,27 @@ body::after {
     background: var(--bg-table-row-alt);
 }
 
+.top-table tbody tr:nth-child(-n+3) {
+    background: linear-gradient(90deg, rgba(233, 30, 99, 0.1), transparent 68%);
+}
+
+.top-table tbody tr:nth-child(-n+3) td:first-child {
+    color: var(--accent-pink);
+    font-family: var(--font-mono);
+    font-weight: 700;
+}
+
+.top-table tbody tr:nth-child(-n+3) .views-badge {
+    background: var(--accent-pink-dim);
+    color: var(--accent-pink);
+}
+
 .top-table tbody tr:hover {
     background: var(--accent-green-dim);
+}
+
+.top-table tbody tr:nth-child(-n+3):hover {
+    background: linear-gradient(90deg, rgba(233, 30, 99, 0.18), rgba(233, 30, 99, 0.08) 68%);
 }
 
 .top-table tbody tr:last-child td {
