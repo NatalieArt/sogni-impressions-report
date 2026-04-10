@@ -883,6 +883,8 @@ body::after {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 2rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .top-table {
@@ -892,6 +894,7 @@ body::after {
     border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid var(--border-subtle);
+    min-width: 760px;
 }
 
 .top-table thead th {
@@ -982,7 +985,20 @@ td[style*="color:#9ca3af"] {
 @media (max-width: 768px) {
     body { padding: 0 1rem 2rem; }
     .top-nav { flex-wrap: wrap; padding: 0.9rem 1rem; }
-    .nav-links { order: 3; width: 100%; flex-wrap: wrap; justify-content: flex-start; }
+    .brand svg { height: 22px; }
+    .nav-links {
+        order: 3;
+        width: 100%;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 0.4rem;
+    }
+    .nav-link {
+        flex: 1 1 0;
+        text-align: center;
+        padding: 0.55rem 0.4rem;
+        font-size: 0.74rem;
+    }
     .create-btn { width: 100%; }
     .header { padding-top: 7rem; margin-bottom: 3rem; }
     .hero-shell { min-height: auto; padding: 2rem 0 1rem; }
@@ -992,18 +1008,118 @@ td[style*="color:#9ca3af"] {
     .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
     .hero-grid { grid-template-columns: 1fr; }
     .hero-card { min-height: auto; padding: 1.5rem; border-radius: var(--radius-lg); }
+    .hero-card-top { max-width: none; }
     .hero-title { font-size: 2rem; }
     .hero-action { min-width: 100%; }
     .stats-bar { grid-template-columns: 1fr; gap: 0.8rem; }
     .stat-card { min-width: 120px; padding: 1.35rem; border-radius: var(--radius-lg); }
     .stat-card .stat-value { font-size: 1.3rem; }
     .stacked-stat { align-items: flex-start; flex-direction: column; gap: 0.35rem; }
-    .controls { padding: 0.85rem; }
+    .section-intro { margin-bottom: 1rem; }
+    .section-title { font-size: 2rem; }
+    .section-desc { font-size: 0.95rem; }
+    .controls { padding: 0.85rem; gap: 0.7rem; }
+    .search-box {
+        flex-basis: 100%;
+        min-width: 0;
+    }
+    .sort-btn {
+        flex: 1 1 calc(50% - 0.35rem);
+        min-width: 0;
+        padding: 0.8rem 0.65rem;
+        font-size: 0.72rem;
+    }
     .profile-header { padding: 0.8rem 1rem; }
+    .profile-info { width: 100%; }
     .profile-stats { min-width: 100%; }
-    .tweet-row { padding: 0.6rem 1rem; }
+    .profile-stat {
+        padding: 0.7rem 0.75rem;
+    }
+    .profile-stat-value {
+        font-size: 1rem;
+        padding: 0.18rem 0.5rem;
+    }
+    .tweet-row {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        grid-template-areas:
+            "num text link"
+            "views views views"
+            "meta meta meta";
+        align-items: start;
+        gap: 0.7rem;
+        padding: 0.9rem 1rem;
+    }
+    .tweet-num { grid-area: num; }
+    .tweet-text {
+        grid-area: text;
+        min-width: 0;
+        white-space: normal;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+    .tweet-link {
+        grid-area: link;
+        justify-self: end;
+    }
+    .tweet-views {
+        grid-area: views;
+        justify-self: start;
+        min-width: 0;
+        text-align: left;
+    }
+    .tweet-meta {
+        grid-area: meta;
+        flex-wrap: wrap;
+        gap: 0.55rem 0.8rem;
+    }
+    .top-tweets-section {
+        margin-bottom: 1.5rem;
+    }
     .top-table thead th,
     .top-table tbody td { padding: 0.8rem 0.9rem; }
+    .top-table th:nth-child(5),
+    .top-table td:nth-child(5),
+    .top-table th:nth-child(6),
+    .top-table td:nth-child(6) {
+        display: none;
+    }
+    .top-table { min-width: 0; }
+}
+
+@media (max-width: 520px) {
+    .header { padding-top: 8.2rem; }
+    .hero-shell { padding-top: 1.6rem; }
+    .hero-heading { font-size: 2.1rem; }
+    .hero-subtitle { font-size: 0.95rem; }
+    .hero-card { padding: 1.2rem; }
+    .hero-title { font-size: 1.65rem; }
+    .hero-kicker { font-size: 0.72rem; }
+    .section-label { font-size: 0.66rem; }
+    .section-title { font-size: 1.7rem; }
+    .stat-card { padding: 1.1rem; }
+    .stacked-stat { padding: 0.75rem 0; }
+    .sort-btn { flex-basis: 100%; }
+    .profile-header { gap: 0.7rem; }
+    .profile-rank { font-size: 1.25rem; min-width: 30px; }
+    .profile-name { font-size: 1rem; }
+    .profile-handle { font-size: 0.8rem; }
+    .tweet-row {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "text link"
+            "views views"
+            "meta meta";
+    }
+    .tweet-num { display: none; }
+    .top-table th:nth-child(1),
+    .top-table td:nth-child(1),
+    .top-table th:nth-child(4),
+    .top-table td:nth-child(4) {
+        display: none;
+    }
 }
 </style>
 </head>
