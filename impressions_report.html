@@ -517,28 +517,36 @@ body::after {
 }
 
 .stats-bar .stat-card:nth-child(1) {
-    border-color: var(--border-accent);
+    border-color: rgba(233, 30, 99, 0.22);
 }
 
 .stats-bar .stat-card:nth-child(1) .stat-value,
 .stats-bar .stat-card:nth-child(1) .stats-stack-title {
-    color: var(--accent-green);
+    color: var(--accent-pink);
+}
+
+.stats-bar .stat-card:nth-child(1)::before {
+    background: linear-gradient(90deg, transparent, var(--accent-pink-dim), transparent);
+}
+
+.stats-bar .stat-card:nth-child(1):hover {
+    border-color: rgba(233, 30, 99, 0.38);
 }
 
 .stats-bar .stat-card:nth-child(2) {
-    border-color: rgba(0, 229, 255, 0.2);
+    border-color: rgba(233, 30, 99, 0.2);
 }
 
 .stats-bar .stat-card:nth-child(2)::before {
-    background: linear-gradient(90deg, transparent, var(--accent-cyan-dim), transparent);
+    background: linear-gradient(90deg, transparent, var(--accent-pink-dim), transparent);
 }
 
 .stats-bar .stat-card:nth-child(2):hover {
-    border-color: rgba(0, 229, 255, 0.35);
+    border-color: rgba(233, 30, 99, 0.35);
 }
 
 .stats-bar .stat-card:nth-child(2) .stat-value {
-    color: var(--accent-cyan);
+    color: var(--accent-pink);
 }
 
 .stats-bar .stat-card:nth-child(3) {
@@ -984,7 +992,15 @@ td[style*="color:#9ca3af"] {
 
 @media (max-width: 768px) {
     body { padding: 0 1rem 2rem; }
-    .top-nav { flex-wrap: wrap; padding: 0.9rem 1rem; }
+    .top-nav {
+        position: static;
+        flex-wrap: wrap;
+        padding: 0.9rem 1rem;
+        margin: 0 -1rem;
+        border-bottom: 1px solid var(--border-subtle);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
     .brand svg { height: 22px; }
     .nav-links {
         order: 3;
@@ -1000,7 +1016,7 @@ td[style*="color:#9ca3af"] {
         font-size: 0.74rem;
     }
     .create-btn { width: 100%; }
-    .header { padding-top: 7rem; margin-bottom: 3rem; }
+    .header { padding-top: 0; margin-bottom: 3rem; }
     .hero-shell { min-height: auto; padding: 2rem 0 1rem; }
     .hero-heading { font-size: 2.5rem; }
     .hero-subtitle { margin-bottom: 1.8rem; }
@@ -1090,7 +1106,7 @@ td[style*="color:#9ca3af"] {
 }
 
 @media (max-width: 520px) {
-    .header { padding-top: 8.2rem; }
+    .header { padding-top: 0; }
     .hero-shell { padding-top: 1.6rem; }
     .hero-heading { font-size: 2.1rem; }
     .hero-subtitle { font-size: 0.95rem; }
